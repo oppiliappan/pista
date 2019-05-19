@@ -4,7 +4,6 @@ use git2::{ Repository, Status };
 use colored::*;
 
 fn main() {
-    println!("{:?}", env::var("GIT_DIRTY"));
     print!("{}", cwd());
     let (branch, status) = match vcs_status() {
         Some((x, y)) => {
@@ -12,8 +11,8 @@ fn main() {
         },
         None => ("".into(), "".into())
     };
-    println!(" {} {}", branch.green(), status.dimmed());
-    print!("{}", prompt_char());
+    println!(" {} {}", branch, status.dimmed());
+    print!("{} ", prompt_char());
 }
 
 fn cwd() -> String {
@@ -53,7 +52,7 @@ fn vcs_status() -> Option<(colored::ColoredString, String)> {
     } else {
         let commit = reference.peel_to_commit().unwrap();
         let id = commit.id();
-        branch = format!("{}", id).yellow();
+        branch = format!("{:.6}", id).yellow();
     }
 
     let mut repo_stat = String::new();
