@@ -1,6 +1,7 @@
 use std::env;
 use tico::tico;
 use git2::{ Repository, Status };
+use colored::*;
 
 fn main() {
     println!("{:?}", env::var("GIT_DIRTY"));
@@ -11,8 +12,8 @@ fn main() {
         },
         None => ("".into(), "".into())
     };
-    println!(" {} {}", branch, status);
-    println!("{}", prompt_char());
+    println!(" {} {}", branch.green(), status.dimmed());
+    print!("{}", prompt_char());
 }
 
 fn cwd() -> String {
@@ -25,18 +26,18 @@ fn cwd() -> String {
     }
 }
 
-fn prompt_char() -> String {
+fn prompt_char() -> colored::ColoredString {
     let user_char = env::var("PROMPT_CHAR").unwrap_or("$ ".into());
     let root_char = env::var("PROMPT_CHAR_ROOT").unwrap_or("# ".into());
 
     let euid = unsafe { libc::geteuid() };
     match euid {
-        0 => return root_char,
-        _ => return user_char
+        0 => return root_char.red(),
+        _ => return user_char.green()
     }
 }
 
-fn vcs_status() -> Option<(String, String)> {
+fn vcs_status() -> Option<(colored::ColoredString, String)> {
     let current_dir = env::var("PWD").unwrap();
 
     let repo = match Repository::open(current_dir) {
@@ -48,11 +49,11 @@ fn vcs_status() -> Option<(String, String)> {
     let mut branch;
 
     if reference.is_branch() {
-        branch = format!("{}", reference.shorthand().unwrap());
+        branch = format!("{}", reference.shorthand().unwrap()).green();
     } else {
         let commit = reference.peel_to_commit().unwrap();
         let id = commit.id();
-        branch = format!("{}", id);
+        branch = format!("{}", id).yellow();
     }
 
     let mut repo_stat = String::new();
