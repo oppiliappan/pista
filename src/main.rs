@@ -1,8 +1,13 @@
 use std::env;
 use tico::tico;
+use git2::Repository;
 
 fn main() {
-    println!("{}", cwd());
+    print!("{}", cwd());
+    match vcs() {
+        Some(br) => println!(" {}", br),
+        None => println!()
+    }
     println!("{}", prompt_char());
 }
 
@@ -27,5 +32,21 @@ fn prompt_char() -> String {
     }
 }
 
-fn vcs() -> String {
+fn vcs() -> Option<String> {
+    let current_dir = env::var("PWD").unwrap();
+
+    let repo = match Repository::open(current_dir) {
+        Ok(r) => r,
+        Err(_) => return None
+    };
+
+    let reference = repo.head().unwrap();
+
+    if reference.is_branch() {
+        Some(format!("{}", reference.shorthand().unwrap()))
+    } else {
+        let commit = reference.peel_to_commit().unwrap();
+        let id = commit.id();
+        Some(format!("{}", id))
+    }
 }
