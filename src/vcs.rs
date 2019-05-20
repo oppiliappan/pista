@@ -1,15 +1,26 @@
 use std::env;
+use std::path::Path;
 use git2::{ Repository, Status };
 use colored::*;
 
 pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> {
     let current_dir = env::var("PWD").unwrap();
-
-    let repo = match Repository::open(current_dir) {
-        Ok(r) => r,
-        Err(_) => return None
-    };
-
+    
+    let mut repo: Option<Repository> = None;
+    let current_path = Path::new(&current_dir[..]);
+    for path in current_path.ancestors() {
+        match Repository::open(path) {
+            Ok(r) => {
+                repo = Some(r);
+                break;
+            }
+            Err(_) => {},
+        }
+    }
+    if repo.is_none() {
+        return None
+    }
+    let repo = repo.unwrap();
     let reference = repo.head().unwrap();
     let mut branch;
 
