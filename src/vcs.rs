@@ -21,7 +21,10 @@ pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> 
         return None
     }
     let repo = repo.unwrap();
-    let reference = repo.head().unwrap();
+    let reference = match repo.head() {
+        Ok(r) => r,
+        Err(_) => return None
+    };
     let mut branch;
 
     if reference.is_branch() {
