@@ -4,7 +4,7 @@ use git2::{ Repository, Status };
 use colored::*;
 
 fn main() {
-    // print!("{}", cwd());
+    print!("{}", cwd());
     let (branch, status) = match vcs_status() {
         Some((x, y)) => {
             (x, y)
@@ -15,12 +15,24 @@ fn main() {
     print!("{} ", prompt_char());
 }
 
-// fn cwd() -> String {
-//     let path = env::var("PWD").unwrap();
-//     let short_or_not = env::var("SHORTEN_CWD").unwrap_or("1".into());
-// 
-//     _ => tico(&path[..])
-// }
+fn cwd() -> colored::ColoredString {
+    let mut path = env::var("PWD").unwrap();
+    let home = env::var("HOME").unwrap();
+    let tilde_expand = env::var("EXPAND_TILDE").unwrap_or("0".into());
+
+    match tilde_expand.as_ref() {
+        "0" => {},
+        _ => path = path.replace(&home[..], "~")
+    };
+
+    let cwd_shorten = env::var("SHORTEN_CWD").unwrap_or("1".into());
+    let cwd_color = env::var("CWD_COLOR").unwrap_or("white".into());
+    match cwd_shorten.as_ref() {
+        "0" => return path.color(cwd_color),
+        _ => return tico(&path[..]).color(cwd_color)
+    }
+
+}
 
 fn prompt_char() -> colored::ColoredString {
     let user_char = env::var("PROMPT_CHAR").unwrap_or("$ ".into());
