@@ -5,7 +5,7 @@ use colored::*;
 
 pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> {
     let current_dir = env::var("PWD").unwrap();
-    
+
     let mut repo: Option<Repository> = None;
     let current_path = Path::new(&current_dir[..]);
     for path in current_path.ancestors() {
