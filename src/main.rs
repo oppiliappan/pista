@@ -4,7 +4,7 @@ use git2::{ Repository, Status };
 use colored::*;
 
 fn main() {
-    print!("{}", cwd());
+    // print!("{}", cwd());
     let (branch, status) = match vcs_status() {
         Some((x, y)) => {
             (x, y)
@@ -15,15 +15,12 @@ fn main() {
     print!("{} ", prompt_char());
 }
 
-fn cwd() -> String {
-    let path = env::var("PWD").unwrap();
-    let short_or_not = env::var("SHORTEN_CWD").unwrap_or("1".into());
-
-    match short_or_not.as_ref() {
-        "0" => path,
-        _ => tico(&path[..])
-    }
-}
+// fn cwd() -> String {
+//     let path = env::var("PWD").unwrap();
+//     let short_or_not = env::var("SHORTEN_CWD").unwrap_or("1".into());
+// 
+//     _ => tico(&path[..])
+// }
 
 fn prompt_char() -> colored::ColoredString {
     let user_char = env::var("PROMPT_CHAR").unwrap_or("$ ".into());
@@ -61,23 +58,23 @@ fn vcs_status() -> Option<(colored::ColoredString, String)> {
     for file in file_stats.iter() {
         match file.status() {
             Status::WT_NEW |
-            Status::WT_MODIFIED |
-            Status::WT_DELETED |
-            Status::WT_TYPECHANGE |
-            Status::WT_RENAMED => {
-                let stat_char = env::var("GIT_DIRTY").unwrap_or("×".into());
-                repo_stat = stat_char;
-                break;
-            },
-            Status::INDEX_NEW |
-            Status::INDEX_MODIFIED |
-            Status::INDEX_DELETED |
-            Status::INDEX_TYPECHANGE |
-            Status::INDEX_RENAMED => {
+                Status::WT_MODIFIED |
+                Status::WT_DELETED |
+                Status::WT_TYPECHANGE |
+                Status::WT_RENAMED |
+                Status::INDEX_NEW |
+                Status::INDEX_MODIFIED |
+                Status::INDEX_DELETED |
+                Status::INDEX_TYPECHANGE |
+                Status::INDEX_RENAMED => {
+                    let stat_char = env::var("GIT_DIRTY").unwrap_or("×".into());
+                    repo_stat = stat_char;
+                    break;
+                },
+            _ => {
                 let stat_char = env::var("GIT_CLEAN").unwrap_or("·".into());
                 repo_stat = stat_char;
             }
-            _ => { }
         }
     }
     return Some((branch, repo_stat))
