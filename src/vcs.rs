@@ -21,6 +21,17 @@ pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> 
         return None
     }
     let repo = repo.unwrap();
+
+    let mut commit_dist: String = "".into();
+    if let Some((ahead, behind)) = get_ahead_behind(&repo) {
+        if ahead > 0 {
+            commit_dist.push_str(" ↑");
+        }
+        if behind > 0 {
+            commit_dist.push_str(" ↓");
+        }
+    }
+
     let reference = match repo.head() {
         Ok(r) => r,
         Err(_) => return None
@@ -71,3 +82,19 @@ pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> 
     }
     return Some((branch, repo_stat))
 }
+
+fn get_ahead_behind(r: &Repository) -> Option<(usize, usize)> {
+  let head = (r.head().ok())?;
+  if !head.is_branch() {
+    return None
+  }
+
+  let head_name    = (head.shorthand())?;
+  let head_branch  = (r.find_branch(head_name, git2::BranchType::Local).ok())?;
+  let upstream     = (head_branch.upstream().ok())?;
+  let head_oid     = (head.target())?;
+  let upstream_oid = (upstream.get().target())?;
+
+  r.graph_ahead_behind(head_oid, upstream_oid).ok()
+}
+
