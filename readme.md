@@ -2,6 +2,16 @@
 
 > a simple bash prompt for programmers 
 
+![pista.png](https://files.nerdypepper.me/52.png)
+
+### features
+
+ - shortened current working directory
+ - git info (branch/commit, ahead/behind status, repo status)
+ - superuser indicator
+ - fully configurable
+ - m̶̛̩̬͎̲͚͙͇͂͌̏͒̎͗̆̚i̡̛̬̩͙̣̤͈̥̟͔͆̈͑̑͠͝ņ̵̛̟̥̹͍̻͍̐͛̑͋ì̴̛̗̫͍̯͈̖̝͍͊̏͗̍̈́̾m̨̼̦͈͍͕͊̀̾̽̿̅͋͆͜a̵͔̥̫̲͙͒̎͋͌̑͘̚͜͡l̵̨̧̛̪̭̣͚͇͌̇͋̌͘͢
+
 ### installation
 ```shell
 $ cargo install pista
