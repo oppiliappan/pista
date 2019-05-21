@@ -3,7 +3,7 @@ use tico::tico;
 use colored::*;
 
 pub fn cwd() -> colored::ColoredString {
-    let mut path = env::var("PWD").unwrap();
+    let mut path = format!("{}", env::current_dir().unwrap_or("".into()).display());
     let home = env::var("HOME").unwrap();
     let tilde_expand = env::var("EXPAND_TILDE").unwrap_or("0".into());
 
