@@ -27,12 +27,15 @@ pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> 
     };
     let mut branch;
 
+    let branch_color = env::var("BRANCH_COLOR").unwrap_or("bright black".into());
+    let commit_color = env::var("COMMIT_COLOR").unwrap_or("bright black".into());
+
     if reference.is_branch() {
-        branch = format!("{}", reference.shorthand().unwrap()).bright_black();
+        branch = format!("{}", reference.shorthand().unwrap()).color(branch_color);
     } else {
         let commit = reference.peel_to_commit().unwrap();
         let id = commit.id();
-        branch = format!("{:.6}", id).bright_black();
+        branch = format!("{:.6}", id).color(commit_color);
     }
 
     let mut repo_stat = "".white();
@@ -58,7 +61,7 @@ pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> 
                 let stat_char = env::var("GIT_INDEX_MODIFIED").unwrap_or("±".into());
                 repo_stat = stat_char.color(&git_index_modified_color[..]);
             },
-            // STATE: comitted (changes have been saved in the repo)
+            // STATE: committed (changes have been saved in the repo)
             _ => {
                 let stat_char = env::var("GIT_CLEAN").unwrap_or("·".into());
                 repo_stat = stat_char.color(&git_clean_color[..]);
