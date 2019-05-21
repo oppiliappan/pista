@@ -38,10 +38,11 @@ pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> 
         branch = format!("{:.6}", id).color(commit_color);
     }
 
-    let mut repo_stat = "".white();
     let git_clean_color          = env::var("GIT_CLEAN_COLOR").unwrap_or("green".into());
     let git_wt_modified_color    = env::var("GIT_WT_MODIFIED_COLOR").unwrap_or("red".into());
     let git_index_modified_color = env::var("GIT_INDEX_MODIFIED_COLOR").unwrap_or("yellow".into());
+    let stat_char = env::var("GIT_CLEAN").unwrap_or("·".into());
+    let mut repo_stat = stat_char.color(&git_clean_color[..]);
 
     let file_stats = repo.statuses(None).unwrap();
     for file in file_stats.iter() {
