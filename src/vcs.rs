@@ -42,11 +42,11 @@ pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> 
     let commit_color = env::var("COMMIT_COLOR").unwrap_or("bright black".into());
 
     if reference.is_branch() {
-        branch = format!("{}", reference.shorthand().unwrap()).color(branch_color);
+        branch = format!("{}{}", reference.shorthand().unwrap(), commit_dist).color(branch_color);
     } else {
         let commit = reference.peel_to_commit().unwrap();
         let id = commit.id();
-        branch = format!("{:.6}", id).color(commit_color);
+        branch = format!("{:.6}{}", id, commit_dist).color(commit_color);
     }
 
     let git_clean_color          = env::var("GIT_CLEAN_COLOR").unwrap_or("green".into());
