@@ -74,7 +74,7 @@ pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> 
                 repo_stat = stat_char.color(&git_index_modified_color[..]);
             },
             // STATE: committed (changes have been saved in the repo)
-            _ => { }
+            _ => {}
         }
     }
     return Some((branch, repo_stat))

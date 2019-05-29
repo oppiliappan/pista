@@ -1,6 +1,6 @@
 # pista
 
-> a simple bash prompt for programmers 
+> a simple {bash, zsh} prompt for programmers 
 
 ![pista.png](https://files.nerdypepper.me/52.png)
 
@@ -22,10 +22,19 @@ http://rustup.rs and follow the instructions.
 make sure to add `$HOME/.cargo/bin` to your `$PATH`!
 
 
-once you have installed `pista`, set your `PS1` to use it!
+ - bash users, set your `PS1`:  
 ```shell
 PS1="$(pista)"    # regular variant
 PS1="$(pista -m)" # minimal variant
+```
+
+ - zsh users, add this to your `.zshrc`:  
+```shell
+autoinit -Uz add-zsh-hook
+_pista_prompt() {
+	PROMPT=$("pista")   # `pista -m` for the miminal variant
+}
+add-zsh-hook precmd _pista_prompt
 ```
 
 
@@ -39,8 +48,8 @@ thats it! read on if you aren't happy with the defaults.
 
 ### configuration
 
-this is the default configuration. drop this in your `.bashrc` to get started.
-remember to `source ~/.bashrc` to observe the changes!
+this is the default configuration. drop this in your `.bashrc` (or `.zshrc`) to get started.
+remember to `source ~/.bashrc` (or `source ~/.zshrc`) to observe the changes!
 
 ```
 # prompt string to display, for regular users
