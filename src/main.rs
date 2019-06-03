@@ -28,7 +28,7 @@ fn pista() -> String {
     let (branch, status) = vcs::vcs_status().unwrap_or(("".into(), "".into()));
     let venv = venv::get_name();
     let prompt_char = prompt_char::get_char();
-    format!("{cwd} {branch} {status}\n{venv}{pchar} ",
+    format!("%{{{cwd} {branch} {status}%}} %{{\n{venv}{pchar}%}} ",
             cwd=cwd,
             branch=branch,
             status=status,
