@@ -8,7 +8,11 @@ pub fn cwd() -> colored::ColoredString {
     let tilde_expand = env::var("EXPAND_TILDE").unwrap_or("0".into());
 
     match tilde_expand.as_ref() {
-        "0" => path = path.replace(&home[..], "~"),
+        "0" => {
+            if (&path[..]).starts_with(&home[..]) && home.len() > 0 {
+                path = path.replacen(&home[..], "~", 1);
+            }
+        }
         _ => {}
     };
 
