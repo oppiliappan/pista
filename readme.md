@@ -32,7 +32,7 @@ PS1="$(pista -m)" # minimal variant
 ```shell
 autoinit -Uz add-zsh-hook
 _pista_prompt() {
-	PROMPT=$("pista -z")   # `pista -zm` for the miminal variant
+	PROMPT="$(pista -z)"   # `pista -zm` for the miminal variant
 }
 add-zsh-hook precmd _pista_prompt
 ```
