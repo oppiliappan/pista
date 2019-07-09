@@ -13,8 +13,8 @@ license = "MIT"
 
 
 [dependencies]
-tico = "1.0.0"
-libc = "0.2.55"
-colored = { git = "https://github.com/JoshMcguigan/colored", rev = "740434a8b6142b9e50e92679950da98840763949"}
-git2 = "0.8.0"
-clap = "2.33.0"
+tico    = "1.0.0"
+libc    = "0.2.55"
+git2    = "0.8.0"
+clap    = "2.33.0"
+colored = { path = "./colored" }
