@@ -24,8 +24,8 @@ make sure to add `$HOME/.cargo/bin` to your `$PATH`!
 
  - bash users, set your `PS1`:  
 ```shell
-PS1="$(pista)"    # regular variant
-PS1="$(pista -m)" # minimal variant
+PS1='$(pista)'    # regular variant
+PS1='$(pista -m)' # minimal variant
 ```
 
  - zsh users, add this to your `.zshrc`:  
