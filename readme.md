@@ -30,7 +30,7 @@ PS1='$(pista -m)' # minimal variant
 
  - zsh users, add this to your `.zshrc`:  
 ```shell
-autoinit -Uz add-zsh-hook
+autoload -Uz add-zsh-hook
 _pista_prompt() {
 	PROMPT="$(pista -z)"   # `pista -zm` for the miminal variant
 }
