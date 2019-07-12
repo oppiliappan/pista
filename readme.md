@@ -13,22 +13,48 @@
  - m̶̛̩̬͎̲͚͙͇͂͌̏͒̎͗̆̚i̡̛̬̩͙̣̤͈̥̟͔͆̈͑̑͠͝ņ̵̛̟̥̹͍̻͍̐͛̑͋ì̴̛̗̫͍̯͈̖̝͍͊̏͗̍̈́̾m̨̼̦͈͍͕͊̀̾̽̿̅͋͆͜a̵͔̥̫̲͙͒̎͋͌̑͘̚͜͡l̵̨̧̛̪̭̣͚͇͌̇͋̌͘͢
 
 ### installation
+
+ - Step 0: install rust
 ```shell
-$ cargo install pista
+$ curl https://sh.rustup.rs -sSf | sh
+Rust is installed now. Great!
+
+# check if you have the latest version. 
+# pista works with rustc >= 1.34
+$ rustc --version
+rustc 1.36.0 (a53f9df32 2019-07-03)
+
+# update rust if required
+$ rustup update
 ```
 
-cargo is rust's package manager. if you dont have cargo installed, head over to
-http://rustup.rs and follow the instructions.  
-make sure to add `$HOME/.cargo/bin` to your `$PATH`!
+ - Step 1a (install from crates.io): install `pista` with `cargo` (rust's package manager):
+```shell
+# if you want to install from source, skip over to 1b
+$ cargo install pista
 
+$ ~/.cargo/bin/pista -V
+Pista 0.1.2
+# yay!
+```
+ - Step 1b (install from source): if you *do not* want install from crates.io, you can install from source:
+```shell
+# install from source
+$ git clone https://github.com/nerdypepper/pista --recurse-submodules
+$ cargo install --path ./ --force
 
- - bash users, set your `PS1`:  
+$ ~/.cargo/bin/pista -V
+Pista 0.1.2
+# yay!
+```
+
+ - Step 2a (bash): bash users, set your `PS1`:  
 ```shell
 PS1='$(pista)'    # regular variant
 PS1='$(pista -m)' # minimal variant
 ```
 
- - zsh users, add this to your `.zshrc`:  
+ - Step 2b (zsh): zsh users, add this to your `.zshrc`:  
 ```shell
 autoload -Uz add-zsh-hook
 _pista_prompt() {
