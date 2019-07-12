@@ -1,6 +1,6 @@
 [package]
 name = "pista"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["NerdyPepper <akshayoppiliappan@gmail.com>"]
 edition = "2018"
 description = "A simple bash prompt for programmers"
