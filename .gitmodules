@@ -1,0 +1,3 @@
+[submodule "colored"]
+	path = colored
+	url = https://github.com/JoshMcguigan/colored/
