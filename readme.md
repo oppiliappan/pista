@@ -41,7 +41,7 @@ Pista 0.1.2
 ```shell
 # install from source
 $ git clone https://github.com/nerdypepper/pista --recurse-submodules
-$ cargo install --path ./ --force
+$ cargo install --path ./pista --force
 
 $ ~/.cargo/bin/pista -V
 Pista 0.1.2
