@@ -4,6 +4,7 @@ mod vcs;
 mod venv;
 
 use clap::{Arg, App};
+use colored::*;
 
 fn main() {
     let matches = App::new("Pista")
@@ -29,7 +30,10 @@ fn main() {
 }
 
 fn pista(zsh: bool) -> String {
-    let cwd = cwd::cwd();
+    let cwd = match cwd::cwd() {
+        Some(c) => c,
+        None => "[directory does not exist]".color("red")
+    };
     let (branch, status) = vcs::vcs_status().unwrap_or(("".into(), "".into()));
     let venv = venv::get_name();
     let prompt_char = prompt_char::get_char();
@@ -53,7 +57,10 @@ fn pista(zsh: bool) -> String {
 }
 
 fn pista_minimal(zsh: bool) -> String {
-    let cwd = cwd::cwd();
+    let cwd = match cwd::cwd() {
+        Some(c) => c,
+        None => "[directory does not exist]".color("red")
+    };
     let vcs_tuple = vcs::vcs_status();
     let mut vcs_component = String::new();
     if let Some((branch, status)) = vcs_tuple {
