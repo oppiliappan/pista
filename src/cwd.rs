@@ -10,8 +10,10 @@ pub fn cwd() -> Option<colored::ColoredString> {
 
     match tilde_expand.as_ref() {
         "0" => {
-            if (&path[..]).starts_with(&home[..]) && home.len() > 0 {
-                path = path.replacen(&home[..], "~", 1);
+            let home_dir = &home.clone();
+            let home_dir_ext = format!("{}{}", home_dir, "/");
+            if (&path == home_dir) || *(&path.starts_with(&home_dir_ext)) {
+                path = path.replacen(&home_dir[..], "~", 1);
             }
         }
         _ => {}
@@ -21,7 +23,7 @@ pub fn cwd() -> Option<colored::ColoredString> {
     let cwd_color = env::var("CWD_COLOR").unwrap_or("white".into());
     match cwd_shorten.as_ref() {
         "0" => return Some(path.color(cwd_color)),
-        _ => return Some(tico(&path[..]).color(cwd_color))
+        _ => return Some(tico(&path).color(cwd_color))
     }
 
 }
