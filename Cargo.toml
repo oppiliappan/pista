@@ -18,3 +18,4 @@ libc    = "0.2.55"
 git2    = "0.8.0"
 clap    = "2.33.0"
 colored = { path = "./colored", version = "1.8.0" }
+kube-conf = "0.2.0"

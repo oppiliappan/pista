@@ -1,5 +1,6 @@
 mod cwd;
 mod prompt_char;
+mod kubernetes;
 mod vcs;
 mod venv;
 
@@ -36,20 +37,23 @@ fn pista(zsh: bool) -> String {
     };
     let (branch, status) = vcs::vcs_status().unwrap_or(("".into(), "".into()));
     let venv = venv::get_name();
+    let context = kubernetes::get_context();
     let prompt_char = prompt_char::get_char();
     if zsh {
-        format!("%{{{cwd} {branch} {status}%}} %{{\n{venv}{pchar}%}} ",
+        format!("%{{{cwd} {branch} {status} {context}%}} %{{\n{venv}{pchar}%}} ",
             cwd=cwd,
             branch=branch,
             status=status,
+            context=context,
             venv=venv,
             pchar=prompt_char
             )
     } else {
-        format!("{cwd} {branch} {status}\n{venv}{pchar} ",
+        format!("{cwd} {branch} {status} {context}\n{venv}{pchar} ",
             cwd=cwd,
             branch=branch,
             status=status,
+            context=context,
             venv=venv,
             pchar=prompt_char
             )
