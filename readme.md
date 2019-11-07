@@ -2,7 +2,7 @@
 
 > a simple {bash, zsh} prompt for programmers 
 
-![pista.png](https://files.nerdypepper.me/GZ.png)
+![pista.png](https://files.nerdypepper.tech/GZ.png)
 
 ### features
 
