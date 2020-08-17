@@ -36,7 +36,7 @@ pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> 
         Ok(r) => r,
         Err(_) => return None
     };
-    let mut branch;
+    let branch;
 
     let branch_color = env::var("BRANCH_COLOR").unwrap_or("bright black".into());
     let commit_color = env::var("COMMIT_COLOR").unwrap_or("bright black".into());
