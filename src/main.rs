@@ -50,12 +50,13 @@ fn pista(zsh: bool) -> String {
         )
     } else {
         format!(
-            "{cwd} {branch} {status}\n{venv}{pchar} ",
+            "{cwd} {branch} {status}\n{venv}{nix}{pchar} ",
             cwd = cwd,
             branch = branch,
             status = status,
             venv = venv,
-            pchar = prompt_char
+            pchar = prompt_char,
+            nix = venv::in_nix_shell()
         )
     }
 }

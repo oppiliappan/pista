@@ -17,3 +17,16 @@ pub fn get_name() -> colored::ColoredString {
     return "".white()
 }
 
+pub fn in_nix_shell() -> colored::ColoredString {
+    match env::var("IN_NIX_SHELL") {
+        Ok(p) => {
+            if p == "pure" {
+                "(nix) ".green()
+            } else {
+                "(nix) ".red()
+            }
+        }
+        _ => return "".white(),
+    }
+}
+
