@@ -3,6 +3,8 @@ mod prompt_char;
 mod vcs;
 mod venv;
 
+use std::env;
+
 use clap::{App, Arg};
 use colored::*;
 
@@ -36,7 +38,10 @@ fn pista(zsh: bool) -> String {
         Some(c) => c,
         None => "[directory does not exist]".color("red"),
     };
-    let (branch, status) = vcs::vcs_status().unwrap_or(("".into(), "".into()));
+    let (branch, status) = match env::var("DISABLE_VCS").unwrap_or("0".into()).as_ref() {
+        "0" => vcs::vcs_status().unwrap_or(("".into(), "".into())),
+        _ => ("".into(), "".into())
+    };
     let venv = venv::get_name();
     let prompt_char = prompt_char::get_char();
     if zsh {
