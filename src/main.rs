@@ -40,7 +40,7 @@ fn pista(zsh: bool) -> String {
     };
     let (branch, status) = match env::var("DISABLE_VCS").unwrap_or("0".into()).as_ref() {
         "0" => vcs::vcs_status().unwrap_or(("".into(), "".into())),
-        _ => ("".into(), "".into())
+        _ => ("".into(), "".into()),
     };
     let venv = venv::get_name();
     let prompt_char = prompt_char::get_char();
@@ -75,7 +75,7 @@ fn pista_minimal(zsh: bool) -> String {
     let mut vcs_component = String::new();
     if let Some((branch, status)) = vcs_tuple {
         vcs_component = format!(" [{} {}] ", branch, status);
-    } else {
+    } else if cwd.len() > 0 {
         vcs_component.push(' ');
     }
     let venv = venv::get_name();

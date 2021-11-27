@@ -94,6 +94,9 @@ export CWD_COLOR="white"
 # if EXPAND_TILDE is set to 0, `/home/nerdypepper` is shortened to `~`
 export EXPAND_TILDE=0
 
+# if HIDE_HOME_CWD is set to 1, path is hidden when in $HOME
+export HIDE_HOME_CWD=1
+
 # there are three possible states for a git repo
 # - unstaged (working tree has been modified) 
 # - staged (staging area has been modified)

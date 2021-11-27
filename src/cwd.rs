@@ -1,11 +1,22 @@
+use colored::*;
 use std::env;
 use tico::tico;
-use colored::*;
 
 pub fn cwd() -> Option<colored::ColoredString> {
     let path_env = env::current_dir().ok()?;
     let mut path = format!("{}", path_env.display());
     let home = env::var("HOME").unwrap();
+
+    let hide_home = env::var("HIDE_HOME_CWD").unwrap_or("0".into());
+    match hide_home.as_ref() {
+        "0" => {}
+        _ => {
+            if &path == &home {
+                return Some(colored::ColoredString::from(""));
+            }
+        }
+    }
+
     let tilde_expand = env::var("EXPAND_TILDE").unwrap_or("0".into());
 
     match tilde_expand.as_ref() {
@@ -23,7 +34,6 @@ pub fn cwd() -> Option<colored::ColoredString> {
     let cwd_color = env::var("CWD_COLOR").unwrap_or("white".into());
     match cwd_shorten.as_ref() {
         "0" => return Some(path.color(cwd_color)),
-        _ => return Some(tico(&path).color(cwd_color))
+        _ => return Some(tico(&path).color(cwd_color)),
     }
-
 }
