@@ -1,6 +1,6 @@
 use std::env;
 use std::path::Path;
-use git2::{ Repository, Status };
+use git2::{ Repository, Status, StatusOptions };
 use colored::*;
 
 pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> {
@@ -55,7 +55,7 @@ pub fn vcs_status() -> Option<(colored::ColoredString, colored::ColoredString)> 
     let stat_char = env::var("GIT_CLEAN").unwrap_or("·".into());
     let mut repo_stat = stat_char.color(&git_clean_color[..]);
 
-    let file_stats = repo.statuses(None).unwrap();
+    let file_stats = repo.statuses(Some(&mut StatusOptions::default())).unwrap();
     for file in file_stats.iter() {
         match file.status() {
             // STATE: unstaged (working tree modified)
